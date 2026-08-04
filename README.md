@@ -1,75 +1,169 @@
-# React + TypeScript + Vite
+# Commerce Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-minded e-commerce administration dashboard built with React, TypeScript, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Dashboard Preview
 
-## React Compiler
+![Dashboard](docs/screenshots/dashboard.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+✅ Authentication & Protected Routes
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+✅ Dashboard Analytics & KPIs
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+✅ Product Management (CRUD)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+✅ Order Management
 
+✅ User Directory
+
+✅ Dark Mode
+
+✅ Responsive Design
+
+✅ Accessibility Support
+
+---
+
+## Application Screens
+
+### Authentication
+
+| Login |
+|---------|
+| ![Login](docs/screenshots/login.png) |
+
+---
+
+### Dashboard
+
+| Overview |
+|----------|
+| ![Dashboard](docs/screenshots/dashboard.png) |
+
+---
+
+### Product Management
+
+| Products |
+|----------|
+| ![Products](docs/screenshots/products.png) |
+
+Features:
+
+- Create Products
+- Edit Products
+- Delete Products
+- Search
+- Filtering
+- Sorting
+- Pagination
+
+---
+
+### Order Management
+
+| Orders |
+|--------|
+| ![Orders](docs/screenshots/orders.png) |
+
+Features:
+
+- Search Orders
+- Filter By Status
+- Sort Columns
+- Pagination
+
+---
+
+### User Management
+
+| Users |
+|--------|
+| ![Users](docs/screenshots/users.png) |
+
+Features:
+
+- Search By Name
+- Search By Email
+- Filter By Role
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|-----------|------------|
+| Frontend | React 19 |
+| Language | TypeScript |
+| Build Tool | Vite |
+| Styling | Tailwind CSS 4 |
+| Routing | React Router |
+| Charts | Recharts |
+| Icons | Lucide React |
+| Notifications | Sonner |
+
+---
+
+## Architecture Highlights
+
+- Feature-Based Architecture
+- Protected Routes
+- Shared Product Store (`useSyncExternalStore`)
+- Lazy Loaded Routes
+- Memoized Derived State (`useMemo`)
+- Theme Persistence
+- Accessible Components
+
+---
+
+## Installation
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Demo Credentials
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```txt
+Email: admin@example.com
+Password: 123456
 ```
+
+---
+
+## Production Build
+
+```bash
+npm run build
+npm run lint
+```
+
+---
+
+## Future Improvements
+
+- Real Backend Integration
+- TanStack Query
+- RBAC Permissions
+- Unit Testing
+- Integration Testing
+- Analytics & Monitoring
+
+---
+
+## Author
+
+**Eslam Yahya**
+
+Frontend Developer
+
+GitHub: https://github.com/EslamYahya
