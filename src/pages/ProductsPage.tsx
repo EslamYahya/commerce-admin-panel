@@ -3,12 +3,14 @@ import { toast } from "sonner";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import ProductsTable from "@/features/products/components/ProductsTable";
 import ProductForm from "@/features/products/components/ProductForm";
+import { useDebounce } from "@/hooks/useDebounce";
 import type { Product } from "@/features/products/types";
 
 function ProductsPage() {
   const { data, loading, error, addProduct, updateProduct, deleteProduct } =
     useProducts();
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -17,7 +19,7 @@ function ProductsPage() {
   const filteredProducts = data.filter((product) => {
     const matchesSearch = product.name
       .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+      .includes(debouncedSearchTerm.toLowerCase());
     const matchesCategory =
       selectedCategory === "all" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;

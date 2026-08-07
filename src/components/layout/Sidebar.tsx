@@ -1,9 +1,16 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Package, ShoppingCart, Users } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  Tags,
+  ShoppingCart,
+  Users,
+} from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", path: "/", icon: LayoutDashboard },
   { label: "Products", path: "/products", icon: Package },
+  { label: "Categories", path: "/categories", icon: Tags },
   { label: "Orders", path: "/orders", icon: ShoppingCart },
   { label: "Users", path: "/users", icon: Users },
 ];

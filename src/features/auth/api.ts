@@ -1,8 +1,8 @@
 import type { AuthUser } from "./types";
 
 const MOCK_CREDENTIALS = {
-  email: "admin@example.com",
-  password: "123456",
+  email: import.meta.env.VITE_MOCK_EMAIL ?? "admin@example.com",
+  password: import.meta.env.VITE_MOCK_PASSWORD ?? "123456",
 };
 
 export function login(email: string, password: string): Promise<AuthUser> {

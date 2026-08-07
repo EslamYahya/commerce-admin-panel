@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { getOrders } from "../api";
 import type { Order } from "../types";
 
@@ -6,46 +6,72 @@ interface UseOrdersResult {
   data: Order[];
   loading: boolean;
   error: string | null;
+  updateOrderStatus: (id: number, status: Order["status"]) => void;
+  deleteOrder: (id: number) => void;
 }
 
 export function useOrders(): UseOrdersResult {
-  const [data, setData] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const snapshot = useSyncExternalStore(
+    orderStore.subscribe,
+    orderStore.getSnapshot,
+    orderStore.getSnapshot,
+  );
 
-  useEffect(() => {
-    let isMounted = true;
+  function updateOrderStatus(id: number, status: Order["status"]) {
+    orderStore.updateStatus(id, status);
+  }
 
-    async function fetchOrders() {
-      try {
-        setLoading(true);
-        setError(null);
-        const orders = await getOrders();
+  function deleteOrder(id: number) {
+    orderStore.remove(id);
+  }
 
-        if (isMounted) {
-          setData(orders);
-        }
-      } catch {
-        if (isMounted) {
-          setError("Failed to fetch orders. Please try again later.");
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchOrders();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return {
-    data,
-    loading,
-    error,
-  };
+  return { ...snapshot, updateOrderStatus, deleteOrder };
 }
+
+type OrderSnapshot = Pick<UseOrdersResult, "data" | "loading" | "error">;
+
+let snapshot: OrderSnapshot = { data: [], loading: true, error: null };
+const listeners = new Set<() => void>();
+
+const orderStore = {
+  subscribe(listener: () => void) {
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+  },
+  getSnapshot: () => snapshot,
+  emit() {
+    listeners.forEach((listener) => listener());
+  },
+  set(next: OrderSnapshot) {
+    snapshot = next;
+    orderStore.emit();
+  },
+  async load() {
+    try {
+      const data = await getOrders();
+      orderStore.set({ data, loading: false, error: null });
+    } catch {
+      orderStore.set({
+        data: [],
+        loading: false,
+        error: "Failed to fetch orders. Please try again later.",
+      });
+    }
+  },
+  updateStatus(id: number, status: Order["status"]) {
+    orderStore.set({
+      ...snapshot,
+      data: snapshot.data.map((order) =>
+        order.id === id ? { ...order, status } : order,
+      ),
+    });
+  },
+  remove(id: number) {
+    orderStore.set({
+      ...snapshot,
+      data: snapshot.data.filter((order) => order.id !== id),
+    });
+  },
+};
+
+void orderStore.load();
